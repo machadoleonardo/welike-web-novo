@@ -1,0 +1,63 @@
+.paddingBoxs{
+	padding: 10px 25px;
+}
+.createCampaign{
+	height: 400px;
+}
+
+.smallIcon{
+	width: 40px;
+}
+
+.padding5{
+	padding: 5px;
+}
+
+.heartbitGrey{
+	color: #4d585f !important;
+}
+
+.heartbitGrey:hover{
+	background-color: #fff !important;
+	color: #4d585f !important;
+}
+
+.heartbitGreen{
+	color: #4caf50 !important;
+}
+
+.heartbitGreen:hover{
+	background-color: #fff !important;
+	color: #4caf50 !important;
+}
+
+.heartbitPointGreen{
+	background-color: #4caf50 !important;
+}
+
+.heartbitPointGrey{
+	background-color: #4d585f !important;
+}
+
+.userText{
+	display: inline-block;
+	vertical-align: bottom;
+	text-align: left;
+}
+
+.referenceImage{
+	width: 48px;
+}
+
+#mynetwork {
+  height: 500px;
+  border: 0px solid lightgray;
+}
+
+.normalText{
+	color: #000;
+}
+
+.modal .modal-header .close {
+    color: #f2f2f2;
+}

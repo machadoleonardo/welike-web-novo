@@ -8,7 +8,7 @@ import { compose } from "redux";
 
 import { getIntlProviderConfig } from "../commons/i18n/intl";
 import { ROUTES } from "../commons/routes/routes";
-import { usuarioActions, usuarioTypes } from "../redux/modules/usuario";
+import {usuarioActions, usuarioSelectors, usuarioTypes} from "../redux/modules/usuario";
 import {
   actions as flowActions,
   selectors as flowSelectors
@@ -19,6 +19,9 @@ import Loading from "../commons/components/Loading";
 import PrivateRoute from "../commons/containers/PrivateRoute";
 import AlertMessage from "./AlertMessage";
 import ModalMessage from "./ModalMessage";
+import NavBar from "../commons/components/Template/Navbar";
+import SideBar from "../commons/components/Template/SideBar";
+import Login from "./Security/Login";
 
 class App extends Component {
   componentWillUnmount() {
@@ -38,7 +41,7 @@ class App extends Component {
   }
 
   render() {
-    const { sucesso, done, loading, history } = this.props;
+    const { sucesso, done, loading, history, isLogged } = this.props;
 
     if (loading || !done) {
       // não terminou de carregar as informações do usuário
@@ -56,9 +59,16 @@ class App extends Component {
       <Fragment>
         <IntlProvider textComponent={Fragment} {...intlProviderProps}>
           <ConnectedRouter history={history}>
-            <Router history={history}>
-              <Switch>{this.renderRoutes()}</Switch>
-            </Router>
+            {
+              !isLogged ? <Login/> :
+              <Fragment>
+                <NavBar/>
+                <Router history={history}>
+                  <SideBar/>
+                  <Switch>{this.renderRoutes()}</Switch>
+                </Router>
+              </Fragment>
+            }
           </ConnectedRouter>
         </IntlProvider>
         <AlertMessage />
@@ -74,6 +84,7 @@ function mapStateToProps(state) {
       state,
       usuarioTypes.USUARIO_CONSULTAR
     ),
+    isLogged: usuarioSelectors.isLogged(),
     done: flowSelectors.isDoneByType(state, usuarioTypes.USUARIO_CONSULTAR),
     sucesso: flowSelectors.isSuccessByType(
       state,

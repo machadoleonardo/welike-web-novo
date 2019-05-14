@@ -1,19 +1,11 @@
-import React, { PureComponent } from 'react';
-import FilaProcessos from './FilaTrabalho/FilaProcessos';
-import Page from '../../commons/components/Page';
-import CentralMenuContainer from './CentralMenuContainer';
+import React, {PureComponent} from 'react';
 
-class CentralAtividades extends PureComponent {
+class CampaignList extends PureComponent {
   render(){
-    const { pathname } = this.props.location;
-    
     return (
-      <Page>
-        <CentralMenuContainer path={pathname} />
-        <FilaProcessos />
-      </Page>
+      <div>teste</div>
     );
   }
 }
 
-export default CentralAtividades;
+export default CampaignList;

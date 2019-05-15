@@ -26,6 +26,7 @@ class Login extends React.Component {
     }
 
     render() {
+        console.log("aqui");
         return (
             <div className="wrapper">
                 <div className="header header-filter" style={{ backgroundImage: "url(app/assets/images/login-bg-people-playing-pb.png)", backgroundSize: "cover", backgroundPosition: "top center" }}>

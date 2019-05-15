@@ -28,10 +28,6 @@ class App extends Component {
     this.props.reset(usuarioTypes.USUARIO_CONSULTAR);
   }
 
-  componentDidMount() {
-    this.props.consultarUsuario();
-  }
-
   renderRoutes() {
     return _.chain(ROUTES)
       .map((route, i) => {
@@ -43,15 +39,15 @@ class App extends Component {
   render() {
     const { sucesso, done, loading, history, isLogged } = this.props;
 
-    if (loading || !done) {
-      // não terminou de carregar as informações do usuário
-      return <Loading />;
-    }
-
-    if (!sucesso) {
-      // o backend não respondeu com sucesso
-      return <Manutencao />;
-    }
+    // if (loading || !done) {
+    //   // não terminou de carregar as informações do usuário
+    //   return <Loading />;
+    // }
+    //
+    // if (!sucesso) {
+    //   // o backend não respondeu com sucesso
+    //   return <Manutencao />;
+    // }
 
     const intlProviderProps = getIntlProviderConfig();
 
@@ -62,9 +58,9 @@ class App extends Component {
             {
               !isLogged ? <Login/> :
               <Fragment>
-                <NavBar/>
+                {/*<NavBar/>*/}
                 <Router history={history}>
-                  <SideBar/>
+                  {/*<SideBar/>*/}
                   <Switch>{this.renderRoutes()}</Switch>
                 </Router>
               </Fragment>
@@ -84,7 +80,7 @@ function mapStateToProps(state) {
       state,
       usuarioTypes.USUARIO_CONSULTAR
     ),
-    isLogged: usuarioSelectors.isLogged(),
+    isLogged: usuarioSelectors.isLogged(state),
     done: flowSelectors.isDoneByType(state, usuarioTypes.USUARIO_CONSULTAR),
     sucesso: flowSelectors.isSuccessByType(
       state,
@@ -94,7 +90,6 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  consultarUsuario: usuarioActions.consultarUsuario,
   reset: flowActions.reset
 };
 

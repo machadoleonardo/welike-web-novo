@@ -1,4 +1,5 @@
 import {createAction, handleActions} from 'redux-actions';
+import _ from "lodash";
 
 // ACTION TYPES
 const LOGIN = `${process.env.PUBLIC_URL}/USUARIO/LOGIN`;
@@ -34,7 +35,7 @@ const isPossuiAcessoTela = (state, tela) => {
   return true;
 };
 
-const isLogged = state => state.token != null;
+const isLogged = state => !_.isNil(state.token);
 
 export const usuarioSelectors = {
   isPossuiAcessoTela,

@@ -58,9 +58,9 @@ class App extends Component {
             {
               !isLogged ? <Login/> :
               <Fragment>
-                {/*<NavBar/>*/}
+                <NavBar/>
                 <Router history={history}>
-                  {/*<SideBar/>*/}
+                  <SideBar/>
                   <Switch>{this.renderRoutes()}</Switch>
                 </Router>
               </Fragment>

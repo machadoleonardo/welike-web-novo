@@ -3,21 +3,18 @@ import {usuarioActions} from "../../redux/modules/usuario";
 import {compose} from "redux";
 import connect from "react-redux/es/connect/connect";
 import {injectIntl} from "react-intl";
+import {Formik} from "formik";
+import { withRouter } from "react-router";
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    state = {
-        user: '',
-        password: ''
-    };
-
-    login = (e) => {
-        e.preventDefault();
+    login = (values) => {
         const { login } = this.props;
-        login(...this.state);
+        login({...values});
+        this.props.history.push("/dashboard");
     };
 
     componentWillMount() {
@@ -26,33 +23,46 @@ class Login extends React.Component {
     }
 
     render() {
-        console.log("aqui");
         return (
             <div className="wrapper">
-                <div className="header header-filter" style={{ backgroundImage: "url(app/assets/images/login-bg-people-playing-pb.png)", backgroundSize: "cover", backgroundPosition: "top center" }}>
+                <div className="header header-filter" style={{ backgroundImage: "url(assets/welike/images/login-bg-people-playing-pb.png)", backgroundSize: "cover", backgroundPosition: "top center" }}>
                     <div className="container">
                         <div className="row">
                             <div className="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 text-center">
                                 <div className="card card-signup">
-                                    <form onSubmit={this.login}>
-                                        <div className="header header-primary text-center">
-                                            <img src="app/assets/images/logo-we-like_branco.png" alt="Smiley face" height="42" />
-                                        </div>
-                                        <h3 className="mt-0">Welcome</h3>
-                                        <p className="help-block">Login</p>
-                                        <div className="content">
-                                            <div className="form-group">
-                                                <input name="email" type="text" className="form-control underline-input normalText" placeholder="Enter Your Email" />
+                                    <Formik
+                                        initialValues={{
+                                            user: '', password: ''
+                                        }}
+                                        onSubmit={(values) => {
+                                            this.login(values);
+                                        }}
+                                        render={({
+                                             handleSubmit,
+                                             isSubmitting,
+                                             handleChange
+                                         }) => (
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="header header-primary text-center">
+                                                <img src="assets/welike/images/logo-we-like_branco.png" alt="Smiley face" height="42" />
                                             </div>
-                                            <div className="form-group">
-                                                <input name="pass" type="password" placeholder="Password..." className="form-control underline-input normalText" />
+                                            <h3 className="mt-0">Welcome</h3>
+                                            <p className="help-block">Login</p>
+                                            <div className="content">
+                                                <div className="form-group">
+                                                    <input name="user" type="text" onChange={handleChange} className="form-control underline-input normalText" placeholder="Enter Your Email" />
+                                                </div>
+                                                <div className="form-group">
+                                                    <input name="password" type="password" onChange={handleChange} placeholder="Password..." className="form-control underline-input normalText" />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="footer text-center">
-                                            <button type="submit" className="btn btn-primary btn-raised">Login<div className="ripple-container"></div></button>
-                                        </div>
-                                        <a href="forgotpass.html" className="btn btn-primary btn-wd btn-lg">FORGOT PASSWORD?</a>
-                                    </form>
+                                            <div className="footer text-center">
+                                                <button type="submit" disabled={isSubmitting} className="btn btn-primary btn-raised">Login<div className="ripple-container"></div></button>
+                                            </div>
+                                            <a href="forgotpass.html" className="btn btn-primary btn-wd btn-lg">FORGOT PASSWORD?</a>
+                                        </form>
+                                        )}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -75,4 +85,4 @@ const mapDispatchToProps = {
     login: usuarioActions.login,
 };
 
-export default compose(connect(null, mapDispatchToProps), injectIntl)(Login);
+export default compose(connect(null, mapDispatchToProps), injectIntl, withRouter)(Login);

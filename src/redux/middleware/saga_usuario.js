@@ -13,8 +13,8 @@ function* login(action) {
     type: action.type,
 
     fnTry: function* () {
-      const token = yield call(usuarioService.login(action.user, action.password));
-      yield put(usuarioActions.login(token));
+      const token = yield call(usuarioService.login, action.payload);
+      yield put(usuarioActions.atualizarToken(token));
     },
   });
 }

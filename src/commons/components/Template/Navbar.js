@@ -8,7 +8,7 @@ class NavBar extends React.Component {
                 <section id="header">
                     <header className="clearfix">
                         <div className="branding">
-                            <img src="app/assets/images/logo-we-like_branco.png" alt="Smiley face" className="welikeLogo" height="42" />
+                            <img src="assets/welike/images/logo-we-like_branco.png" alt="Smiley face" className="welikeLogo" height="42" />
                         </div>
 
                         <div className="overlay"></div>

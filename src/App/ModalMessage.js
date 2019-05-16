@@ -1,7 +1,7 @@
 import React, {Fragment, PureComponent} from 'react';
 import {connect} from 'react-redux';
 import { modalMessageSelectors, modalMessageActions } from '../redux/modules/modal-message';
-import Dialog from '../commons/components/Dialog/dialog';
+// import Dialog from '../commons/components/Dialog/dialog';
 
 class ModalMessage extends PureComponent {
 
@@ -19,13 +19,16 @@ class ModalMessage extends PureComponent {
     const { titulo, mensagem, isOpen, confirmar } = optionsModal;
 
     return (
-      <Dialog
-        title={titulo}
-        message={mensagem}
-        isOpen={isOpen}
-        onCancelar={this.handleCancelar}
-        onConfirmar={confirmar}
-      />
+        <div>
+          {/*<Dialog*/}
+          {/*  title={titulo}*/}
+          {/*  message={mensagem}*/}
+          {/*  isOpen={isOpen}*/}
+          {/*  onCancelar={this.handleCancelar}*/}
+          {/*  onConfirmar={confirmar}*/}
+          {/*/>*/}
+          modal
+        </div>
     );
   }
 }

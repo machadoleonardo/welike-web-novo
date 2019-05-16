@@ -3,16 +3,20 @@ import _ from "lodash";
 
 // ACTION TYPES
 const LOGIN = `${process.env.PUBLIC_URL}/USUARIO/LOGIN`;
+const ATUALIZAR_TOKEN = `${process.env.PUBLIC_URL}/USUARIO/ATUALIZAR_TOKEN`;
 
 export const usuarioTypes = {
   LOGIN,
+  ATUALIZAR_TOKEN,
 };
 
 // ACTIONS
 const login = createAction(LOGIN);
+const atualizarToken = createAction(ATUALIZAR_TOKEN);
 
 export const usuarioActions = {
   login,
+  atualizarToken,
 };
 
 // INITIAL STATE
@@ -22,8 +26,9 @@ const initialState = {
 
 // REDUCERS
 const reducer = handleActions({
-  [LOGIN]: (state, action) => {
-    return { ...state, token: action.payload };
+  [ATUALIZAR_TOKEN]: (state, action) => {
+    const token = action.payload;
+    return {...state, token};
   },
 }, initialState);
 

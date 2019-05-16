@@ -68,7 +68,7 @@ class App extends Component {
           </ConnectedRouter>
         </IntlProvider>
         <AlertMessage />
-        <ModalMessage />
+        {/*<ModalMessage />*/}
       </Fragment>
     );
   }

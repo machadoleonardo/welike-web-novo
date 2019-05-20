@@ -1,4 +1,4 @@
-import {call, put, takeEvery, takeLatest} from 'redux-saga/effects';
+import {call, put, takeEvery} from 'redux-saga/effects';
 
 import {flow} from '../modules/flow';
 import {usuarioActions, usuarioTypes} from '../modules/usuario';

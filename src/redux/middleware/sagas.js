@@ -7,6 +7,7 @@ import interessadoSaga from './saga_interessados';
 import classificacaoSaga from './saga_classificacao';
 import tarefaSaga from './saga_tarefa';
 import usuarioSaga from './saga_usuario';
+import dashboardSaga from './saga_dashboard';
 import filtroSaga from './saga_filtros';
 
 export default function* watchMany() {
@@ -19,5 +20,6 @@ export default function* watchMany() {
     tarefaSaga(),
     usuarioSaga(),
     filtroSaga(),
+    dashboardSaga(),
   ]);
 };

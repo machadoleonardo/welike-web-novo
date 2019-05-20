@@ -7,9 +7,6 @@ import {Formik} from "formik";
 import { withRouter } from "react-router";
 
 class Login extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     login = (values) => {
         const { login } = this.props;
@@ -39,7 +36,6 @@ class Login extends React.Component {
                                         }}
                                         render={({
                                              handleSubmit,
-                                             isSubmitting,
                                              handleChange
                                          }) => (
                                         <form onSubmit={handleSubmit}>
@@ -57,7 +53,7 @@ class Login extends React.Component {
                                                 </div>
                                             </div>
                                             <div className="footer text-center">
-                                                <button type="submit" disabled={isSubmitting} className="btn btn-primary btn-raised">Login<div className="ripple-container"></div></button>
+                                                <button type="submit" className="btn btn-primary btn-raised">Login<div className="ripple-container"></div></button>
                                             </div>
                                             <a href="forgotpass.html" className="btn btn-primary btn-wd btn-lg">FORGOT PASSWORD?</a>
                                         </form>

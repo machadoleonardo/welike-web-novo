@@ -1,27 +1,16 @@
-import axios from '../http/axios';
+import axios from 'axios';
+
+const URL_DEFAULT = "campaign";
 
 export default {
-  carregar: payload => {
-    return axios
-      .post(`/s/fila-processo-tarefa`, payload)
-      .then(res => { return res.data; });
-  },
-
-  getTarefaJaAtribuida: payload => {
-    return axios
-      .get('/s/processo-tarefa/tarefa/validacao/' + payload, { data: {} })
-    .then(res =>  res.data )
-  },
-
-  atribuirTarefa: payload => {
-    return axios
-    .post(`/s/processo-tarefa/atribuicao`, [payload] )
-    .then(res => { return res.data; })
-  },
-
-  desatribuirTarefa: payload => {
-    return axios
-    .delete(`/s/processo-tarefa/atribuicao`, {data: [payload]})
-    .then(res => { return res.data; })
-  },
+    get: async () => {
+        const response = await axios.get(URL_DEFAULT);
+        return response.data;
+    },
+    save: (campanha) => {
+        axios.post(URL_DEFAULT, campanha);
+    },
+    saveAndStart: (campanha) => {
+        axios.post(URL_DEFAULT + "/" + "save/start", campanha);
+    },
 }

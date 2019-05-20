@@ -1,5 +1,6 @@
 import {createAction, handleActions} from 'redux-actions';
 import _ from "lodash";
+import {getItem, setItem} from "../../commons/helpers/storage-helper";
 
 // ACTION TYPES
 const LOGIN = `${process.env.PUBLIC_URL}/USUARIO/LOGIN`;
@@ -27,8 +28,8 @@ const initialState = {
 // REDUCERS
 const reducer = handleActions({
   [ATUALIZAR_TOKEN]: (state, action) => {
-    const token = action.payload;
-    return {...state, token};
+    setItem("token", action.payload);
+    return {...state};
   },
 }, initialState);
 
@@ -40,7 +41,7 @@ const isPossuiAcessoTela = (state, tela) => {
   return true;
 };
 
-const isLogged = state => !_.isNil(state.token);
+const isLogged = state => !_.isNil(getItem("token"));
 
 export const usuarioSelectors = {
   isPossuiAcessoTela,

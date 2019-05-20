@@ -1,10 +1,8 @@
-import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
+import {all, call, put, select, takeEvery} from 'redux-saga/effects';
+import {delay} from 'redux-saga';
 import filaService from '../../commons/services/fila';
-import { filaActions, filaTypes, filaSelectors } from '../modules/fila';
-import { flow, actions as  flowActions } from '../modules/flow';
-import { modalMessageActions } from '../modules/modal-message';
-import { select } from 'redux-saga/effects';
+import {filaActions, filaSelectors, filaTypes} from '../modules/fila';
+import {flow} from '../modules/flow';
 
 export default function* configuracoesSaga() {
   yield takeEvery(filaTypes.CARREGAR, carregar);

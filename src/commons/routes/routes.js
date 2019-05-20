@@ -49,7 +49,7 @@ export const ROUTES = {
     exact: true,
   },
   CAMPAIGN_LIST: {
-    path: '/campanha/',
+    path: '/campanha',
     component: CampaignList,
     exact: true,
   },
@@ -59,12 +59,12 @@ export const ROUTES = {
     exact: true,
   },
   REFERENCE_LIST: {
-    path: '/pasta/gestao-acesso-externo',
+    path: '/referencia',
     component: ReferenceList,
     exact: true,
   },
   REFERENCE_FORM: {
-    path: '/pasta/gestao-acesso-externo',
+    path: '/referencia/form',
     component: ReferenceForm,
     exact: true,
   },

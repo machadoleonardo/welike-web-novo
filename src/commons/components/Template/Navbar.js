@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React, {Component} from 'react';
 
-class NavBar extends React.Component {
+class NavBar extends Component {
     render() {
         return (
             <div id="wrap" className="animsition">
                 <section id="header">
                     <header className="clearfix">
                         <div className="branding">
-                            <img src="assets/welike/images/logo-we-like_branco.png" alt="Smiley face" className="welikeLogo" height="42" />
+                            <img src={`${process.env.PUBLIC_URL}/assets/welike/images/logo-we-like_branco.png`} alt="Smiley face" className="welikeLogo" height="42" />
                         </div>
 
                         <div className="overlay"></div>
                         <ul className="nav-right pull-right list-inline">
                             <li className="dropdown nav-profile">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="app/assets/images/profile-photo.jpg" alt="" className="0 size-30x30" />
+                                    <img src={`${process.env.PUBLIC_URL}/assets/welike/images/profile-photo.jpg`} alt="" className="0 size-30x30" />
                                 </a>
                                 <ul className="dropdown-menu" role="menu">
                                     <li>

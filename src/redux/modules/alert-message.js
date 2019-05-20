@@ -41,7 +41,7 @@ const reducer = handleActions({
     let newState = _.cloneDeep(state);
     const id = action.payload;
 
-    let removed = _.remove(newState.alertMessages, (alertMessage)=>  alertMessage.id === id );
+    _.remove(newState.alertMessages, (alertMessage)=>  alertMessage.id === id );
     return newState;
   },
 }, initialState);

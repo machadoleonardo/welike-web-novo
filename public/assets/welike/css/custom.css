@@ -1,14 +1,34 @@
-/*html,*/
-/*body,*/
-/*#root,*/
-/*.container-full*/
-/*{*/
-/*	height: 100%;*/
-/*}*/
+html,
+body,
+#root,
+.container-full
+{
+	height: 100%;
+}
 
-/*aside {*/
-/*	height: 100%;*/
-/*}*/
+aside {
+	height: 100%;
+}
+
+.height-100 {
+	height: 100%;
+}
+
+.no-padding-left {
+	padding-left: 0 !important;
+}
+
+.no-margin-left {
+	margin-left: 0 !important;
+}
+
+.no-padding-right {
+	padding-right: 0 !important;
+}
+
+.no-margin-right {
+	margin-right: 0 !important;
+}
 
 .paddingBoxs{
 	padding: 10px 25px;

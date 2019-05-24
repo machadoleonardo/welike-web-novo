@@ -7,10 +7,11 @@ import Container from "../../commons/components/Template/Container";
 
 function CampaignList() {
     const [campaigns, setCampaigns] = useState([]);
+    const [campaign, setCampaign] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
-            setCampaigns(await service.get());
+            setCampaigns(await service.list());
         }
         fetchData();
     }, []);
@@ -30,12 +31,16 @@ function CampaignList() {
         className: 'text-center'
     }];
 
+    function startCampaign(id) {
+        service.start(id);
+    }
+
     const toData = () => {
         return campaigns.map((campaign) => {
             return {
                 icon: <i className="fa fa-rocket"></i>,
-                name: <Link to={'/dashboard'}>{campaign.name}</Link>,
-                action: <button type="button" className="btn btn-raised btn-sm btn-success">
+                name: <Link to={'/campanha/info/' + campaign._id}>{campaign.name}</Link>,
+                action: <button type="button" onClick={() => startCampaign(campaign._id)} className="btn btn-raised btn-sm btn-success">
                     <i className="fa fa-play"></i>
                 </button>
             }

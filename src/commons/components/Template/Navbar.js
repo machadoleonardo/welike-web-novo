@@ -1,6 +1,22 @@
 import React, {Component} from 'react';
+import {compose} from "redux";
+import connect from "react-redux/es/connect/connect";
+import {injectIntl} from "react-intl";
+import {withRouter} from "react-router";
+import {noticationActions, notificationSelectors} from "../../../redux/modules/notification";
 
 class NavBar extends Component {
+
+    componentDidMount() {
+        this.interval = setInterval(async () => {
+            this.props.atualizarNotificacoes();
+        }, 5000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
     render() {
         return (
             <div id="wrap" className="animsition">
@@ -31,26 +47,34 @@ class NavBar extends Component {
                             <li className="dropdown notifications">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                                     <i className="fa fa-bell"></i>
-                                    <div className="notify">
-                                        <span className="heartbit"></span>
-                                        <span className="point"></span>
-                                    </div>
+                                    {
+                                        this.props.campaigns.length > 0 ?
+                                            <div className="notify">
+                                                <span className="heartbit"></span>
+                                                <span className="point"></span>
+                                            </div>
+                                            : null
+                                    }
                                 </a>
-                                <div className="dropdown-menu pull-right with-arrow panel panel-default ">
-                                    <ul className="list-group">
-                                        <li className="list-group-item">
-                                            <a role="button" tabIndex="0" className="media">
+                                {
+                                    this.props.campaigns.length > 0 ?
+                                        <div className="dropdown-menu pull-right with-arrow panel panel-default ">
+                                            <ul className="list-group">
+                                                <li className="list-group-item">
+                                                    <a role="button" tabIndex="0" className="media">
                                                 <span className="pull-left media-object media-icon">
                                                     <i className="fa fa-rocket"></i>
                                                 </span>
-                                                <div className="media-body">
-                                                    <span className="block">A sua campanha Welike está pronta!</span>
-                                                    <small className="text-muted">12 minutes ago</small>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                                        <div className="media-body">
+                                                            <span className="block">A sua campanha Welike está pronta!</span>
+                                                            <small className="text-muted">12 minutes ago</small>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        : null
+                                }
                             </li>
                             <li className="dropdown messages">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown">
@@ -83,4 +107,13 @@ class NavBar extends Component {
         );
     }
 }
-export default NavBar;
+
+const mapStateToProps = (state) => ({
+    campaigns: notificationSelectors.getCampaigns(state),
+});
+
+const mapDispatchToProps = {
+    atualizarNotificacoes: noticationActions.atualizarNotificacoes,
+};
+
+export default compose(connect(mapStateToProps, mapDispatchToProps), injectIntl, withRouter)(NavBar);

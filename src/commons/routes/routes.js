@@ -27,6 +27,11 @@ const CampaignForm = Loadable({
   loading: Loading,
 });
 
+const CampaignInfo = Loadable({
+  loader: () => import('../../App/Campaign/CampaignInfo'),
+  loading: Loading,
+});
+
 const ReferenceList = Loadable({
   loader: () => import('../../App/Reference/ReferenceList'),
   loading: Loading,
@@ -56,6 +61,11 @@ export const ROUTES = {
   CAMPAIGN_FORM: {
     path: '/campanha/form',
     component: CampaignForm,
+    exact: true,
+  },
+  CAMPAIGN_INFO: {
+    path: '/campanha/info/:id',
+    component: CampaignInfo,
     exact: true,
   },
   REFERENCE_LIST: {

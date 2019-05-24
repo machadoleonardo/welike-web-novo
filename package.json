@@ -10,6 +10,7 @@
     "connected-react-router": "^4.4.1",
     "email-validator": "^2.0.4",
     "formik": "^1.4.2",
+    "get-or-else": "^2.0.1",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",

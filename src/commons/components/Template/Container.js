@@ -6,10 +6,10 @@ class Container extends React.Component {
         return (
             <Fragment>
                 <div className="row">
-                    <div className="col-sm-2">
+                    <div className="col-sm-2 no-padding-right no-margin-right">
                         <SideBar/>
                     </div>
-                    <div className="col-sm-10">
+                    <div className="col-sm-10 no-padding-left no-margin-left">
                         {this.props.children}
                     </div>
                 </div>

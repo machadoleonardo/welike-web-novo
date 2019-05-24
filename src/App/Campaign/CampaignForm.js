@@ -35,7 +35,7 @@ function CampaignForm(props) {
                     </div>
                     <Formik
                         initialValues={{
-                            name: '', minSeguidores: 0, seguidores: '', seguindo: ''
+                            name: '', minFollowers: 0, seguidores: '', seguindo: ''
                         }}
                         onSubmit={(values) => {
                             save(values);
@@ -55,7 +55,7 @@ function CampaignForm(props) {
                                     <Col md={2} xs={2}>
                                         <Form.Group controlId="formGroupName">
                                             <Form.Label>Mínimo de seguidores</Form.Label>
-                                            <Form.Control onChange={handleChange} name={'minSeguidores'} type="number" />
+                                            <Form.Control onChange={handleChange} name={'minFollowers'} type="number" />
                                         </Form.Group>
                                     </Col>
                                 </Row>

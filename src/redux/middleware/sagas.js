@@ -1,25 +1,12 @@
-import { all } from 'redux-saga/effects';
-
-import filaSaga from './saga_fila';
-import pastaSaga from './saga_acesso_externo';
-import processoSaga from './saga_processo';
-import interessadoSaga from './saga_interessados';
-import classificacaoSaga from './saga_classificacao';
-import tarefaSaga from './saga_tarefa';
+import {all} from 'redux-saga/effects';
 import usuarioSaga from './saga_usuario';
 import dashboardSaga from './saga_dashboard';
-import filtroSaga from './saga_filtros';
+import notificationSaga from "./saga_notification";
 
 export default function* watchMany() {
   yield all([
-    filaSaga(),
-    pastaSaga(),
-    processoSaga(),
-    interessadoSaga(),
-    classificacaoSaga(),
-    tarefaSaga(),
     usuarioSaga(),
-    filtroSaga(),
     dashboardSaga(),
+    notificationSaga(),
   ]);
 };

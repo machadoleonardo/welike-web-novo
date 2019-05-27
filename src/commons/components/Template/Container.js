@@ -5,8 +5,8 @@ class Container extends React.Component {
     render() {
         return (
             <Fragment>
-                <div className="row">
-                    <div className="col-sm-2 no-padding-right no-margin-right">
+                <div className="row container-full">
+                    <div className="col-sm-2 no-padding-right no-margin-right container-full">
                         <SideBar/>
                     </div>
                     <div className="col-sm-10 no-padding-left no-margin-left">

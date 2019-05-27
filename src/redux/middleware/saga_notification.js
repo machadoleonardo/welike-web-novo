@@ -14,6 +14,7 @@ function* getNotifications(action) {
 
         fnTry: function* () {
             const campaigns = yield call(campaignService.result);
+            // const campaigns = [];
             yield put(noticationActions.atualizarState(campaigns));
         },
     });

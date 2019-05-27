@@ -66,6 +66,17 @@ function CampaignList() {
                                     <ReactTable
                                         data={toData()}
                                         columns={columns}
+                                        defaultPageSize={5}
+                                        filterable={true}
+                                        previousText={'Anterior'}
+                                        nextText={'Próxima'}
+                                        loadingText={'Carregando...'}
+                                        noDataText={'Nenhum registro encontrado'}
+                                        pageText={'Página'}
+                                        ofText={'de'}
+                                        rowsText={'linhas'}
+                                        pageJumpText={'Pular para próxima página'}
+                                        rowsSelectorText={'linhas por página'}
                                     />
                                 </div>
                             </section>

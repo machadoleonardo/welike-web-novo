@@ -4,10 +4,10 @@ import 'react-table/react-table.css';
 import service from "../../commons/services/campaign";
 import {Link} from 'react-router-dom';
 import Container from "../../commons/components/Template/Container";
+import _ from "lodash";
 
 function CampaignList() {
     const [campaigns, setCampaigns] = useState([]);
-    const [campaign, setCampaign] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -26,6 +26,10 @@ function CampaignList() {
         accessor: 'name',
         className: 'text-center'
     }, {
+        Header: 'Status',
+        accessor: 'status',
+        className: 'text-center'
+    }, {
         Header: 'Ação',
         accessor: 'action',
         className: 'text-center'
@@ -35,11 +39,24 @@ function CampaignList() {
         service.start(id);
     }
 
+    function statusToString(status) {
+        if (_.isNil(status)) {
+            return "Não iniciada";
+        } else if (status) {
+            return 'Finalizada';
+        } else {
+            return 'Em processamento';
+        }
+    }
+
     const toData = () => {
+        console.log(campaigns);
         return campaigns.map((campaign) => {
             return {
                 icon: <i className="fa fa-rocket"></i>,
                 name: <Link to={'/campanha/info/' + campaign._id}>{campaign.name}</Link>,
+                // status: campaign.result ? 'Finalizada' : 'Em processamento',
+                status: statusToString(campaign.result),
                 action: <button type="button" onClick={() => startCampaign(campaign._id)} className="btn btn-raised btn-sm btn-success">
                     <i className="fa fa-play"></i>
                 </button>

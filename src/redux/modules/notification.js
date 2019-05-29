@@ -37,8 +37,8 @@ export default reducer;
 
 // SELECTORS
 const getCampaigns = (state) => {
-    if (state.notificacoes && state.notificacoes.notificacoes) {
-        return state.notificacoes.notificacoes.campaigns;
+    if (state.notification && state.notification.notificacoes && state.notification.notificacoes.campaigns) {
+        return state.notification.notificacoes.campaigns;
     } else {
         return {};
     }

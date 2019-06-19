@@ -3,22 +3,9 @@ import ReactTable from "react-table";
 import {usuarioActions} from "../../redux/modules/usuario";
 import {compose} from "redux";
 import connect from "react-redux/es/connect/connect";
-import {influencerActions} from "../../redux/modules/influencer";
+import {influencerActions, influencerSelectors} from "../../redux/modules/influencer";
 
 function RankInfluencer(props) {
-
-    const [influencers, setInfluencers] = useState([]);
-
-    useEffect(() => {
-        async function fetchData() {
-            let influencersFetchData = [];
-            props.campaign.references.forEach((reference) => {
-                influencersFetchData.push(reference.influencers);
-            });
-            setInfluencers(influencersFetchData);
-        }
-        fetchData();
-    }, []);
 
     const columns = [{
         Header: 'Foto',
@@ -52,7 +39,7 @@ function RankInfluencer(props) {
     }];
 
     const toData = () => {
-        return influencers.map((influencer) => {
+        return props.influencersSelecteds.map((influencer) => {
             return {
                 foto: <img alt={'img'} src={influencer.profilePicture} />,
                 name: influencer.fullName,
@@ -89,24 +76,6 @@ function RankInfluencer(props) {
                                     rowsText={'linhas'}
                                     pageJumpText={'Pular para próxima página'}
                                     rowsSelectorText={'linhas por página'}
-                                    getTrProps={
-                                        (state, rowInfo) => {
-                                            if (rowInfo && rowInfo.row) {
-                                                return {
-                                                    onClick: (e) => {
-                                                        console.log(rowInfo);
-                                                        props.updateInfluencersSelecteds(rowInfo);
-                                                    },
-                                                    style: {
-                                                        background: rowInfo.index === this.state.selected ? '#00afec' : 'white',
-                                                        color: rowInfo.index === this.state.selected ? 'white' : 'black'
-                                                    }
-                                                }
-                                            } else {
-                                                return {}
-                                            }
-                                        }
-                                    }
                                 />
                             </div>
                         </div>
@@ -117,8 +86,11 @@ function RankInfluencer(props) {
     );
 }
 
-const mapDispatchToProps = {
-    updateInfluencersSelecteds: influencerActions.updateInfluencersSelecteds,
-};
+function mapStateToProps(state) {
+    return {
+        influencersSelecteds: influencerSelectors.getInfluencersSelecteds(state),
+    };
+}
 
-export default compose(connect(null, mapDispatchToProps))(RankInfluencer);
+
+export default compose(connect(mapStateToProps, null))(RankInfluencer);

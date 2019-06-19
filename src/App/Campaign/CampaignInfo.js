@@ -48,6 +48,9 @@ function CampaignInfo(props) {
             <div className="col-sm-12">
                 <RankInfluencer campaign={campaign} />
             </div>
+            <div className="col-sm-12">
+                <RankInfluencer campaign={campaign} />
+            </div>
         </Container>
     );
 } export default CampaignInfo;

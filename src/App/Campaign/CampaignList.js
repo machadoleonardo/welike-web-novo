@@ -50,12 +50,10 @@ function CampaignList() {
     }
 
     const toData = () => {
-        console.log(campaigns);
         return campaigns.map((campaign) => {
             return {
                 icon: <i className="fa fa-rocket"></i>,
                 name: <Link to={'/campanha/info/' + campaign._id}>{campaign.name}</Link>,
-                // status: campaign.result ? 'Finalizada' : 'Em processamento',
                 status: statusToString(campaign.result),
                 action: <button type="button" onClick={() => startCampaign(campaign._id)} className="btn btn-raised btn-sm btn-success">
                     <i className="fa fa-play"></i>

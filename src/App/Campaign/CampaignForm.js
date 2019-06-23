@@ -63,18 +63,18 @@ function CampaignForm(props) {
                                     <Col md={12} xs={12}>
                                         <Form.Group controlId="formGroupLocalizacao">
                                             <Form.Label>Quem seguiu os perfis de: (arrobas separados por vírgula)</Form.Label>
-                                            <Form.Control onChange={handleChange} name="seguidores" type="text" />
+                                            <Form.Control onChange={handleChange} name="seguindo" type="text" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col md={12} xs={12}>
-                                        <Form.Group controlId="formGroupMinSeguidores">
-                                            <Form.Label>Quem os perfis seguem: (arrobas separados por vírgula)</Form.Label>
-                                            <Form.Control onChange={handleChange} name={'seguindo'} type="text" />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
+                                {/*<Row>*/}
+                                {/*    <Col md={12} xs={12}>*/}
+                                {/*        <Form.Group controlId="formGroupMinSeguidores">*/}
+                                {/*            <Form.Label>Quem os perfis seguem: (arrobas separados por vírgula)</Form.Label>*/}
+                                {/*            <Form.Control onChange={handleChange} name={'seguidores'} type="text" />*/}
+                                {/*        </Form.Group>*/}
+                                {/*    </Col>*/}
+                                {/*</Row>*/}
                                 <Button className={'btn-raised'} type="submit">Salvar</Button>
                                 <Button className={'btn-raised'} onClick={() => setStart(true)} type="submit">Salvar/Start</Button>
                             </Form>

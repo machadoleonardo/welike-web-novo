@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactTable from "react-table";
-import {usuarioActions} from "../../redux/modules/usuario";
 import {compose} from "redux";
 import connect from "react-redux/es/connect/connect";
-import {influencerActions, influencerSelectors} from "../../redux/modules/influencer";
+import {influencerSelectors} from "../../redux/modules/influencer";
 
 function RankInfluencer(props) {
+    const [influencers, setInfluencers] = useState(props.influencersSelecteds);
+
+    useEffect(() => {
+        console.log("aqui");
+        setInfluencers(props.influencersSelecteds);
+    }, [props.influencersSelecteds]);
 
     const columns = [{
         Header: 'Foto',
@@ -19,10 +24,6 @@ function RankInfluencer(props) {
     }, {
         Header: 'Username',
         accessor: 'username',
-        className: 'text-center'
-    }, {
-        Header: 'Bio',
-        accessor: 'bio',
         className: 'text-center'
     }, {
         Header: 'Referências',
@@ -39,13 +40,13 @@ function RankInfluencer(props) {
     }];
 
     const toData = () => {
-        return props.influencersSelecteds.map((influencer) => {
+        console.log(influencers);
+        return influencers.map((influencer) => {
             return {
-                foto: <img alt={'img'} src={influencer.profilePicture} />,
-                name: influencer.fullName,
-                username: <a href={'https://www.instagram.com/' + influencer.username} target="_blank">@{influencer.username}</a>,
-                bio: influencer.bio,
-                references: this.props.campaign.userNames,
+                foto: <img alt={'img'} src={influencer.foto.props.src} />,
+                name: influencer.name,
+                username: <a href={'https://www.instagram.com/' + influencer.username.props.children[1]} target="_blank">@{influencer.username.props.children[1]}</a>,
+                references: influencer.references,
                 followedBy: influencer.followedBy,
                 follows: influencer.follows
             }
@@ -57,7 +58,7 @@ function RankInfluencer(props) {
             <div className="col-md-12">
                 <section className="boxs">
                     <div className="boxs-header dvd dvd-btm">
-                        <h1 className="custom-font">Ranking de Influenciadores</h1>
+                        <h1 className="custom-font">Influenciadores selecionados</h1>
                     </div>
                     <div className="boxs-body">
                         <div className="row">

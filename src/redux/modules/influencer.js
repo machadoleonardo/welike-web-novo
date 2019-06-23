@@ -16,14 +16,26 @@ export const influencerActions = {
 
 // INITIAL STATE
 const initialState = {
-    influencersSelected: null,
+    influencersSelected: [],
 };
 
 // REDUCERS
 const reducer = handleActions({
     [UPDATE_INFLUENCER_SELECTED]: (state, action) => {
+        const selected = action.payload;
         const influencersSelected = Object.assign(state.influencersSelected);
-        influencersSelected.push(action.payload);
+        let exists = false;
+
+        influencersSelected.forEachSync((influencer) => {
+            if (influencer.username.props.children[1] === selected.username.props.children[1]) {
+                exists = true;
+            }
+        });
+
+        if (!exists) {
+            influencersSelected.push(action.payload);
+        }
+
         return {influencersSelected};
     },
 }, initialState);

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactTable from "react-table";
-import {usuarioActions} from "../../redux/modules/usuario";
+import 'react-table/react-table.css';
+import _ from "lodash";
 import {compose} from "redux";
 import connect from "react-redux/es/connect/connect";
 import {influencerActions} from "../../redux/modules/influencer";
@@ -8,17 +9,24 @@ import {influencerActions} from "../../redux/modules/influencer";
 function RankInfluencer(props) {
 
     const [influencers, setInfluencers] = useState([]);
+    const [selected, setSelected] = useState(null);
 
     useEffect(() => {
-        async function fetchData() {
-            let influencersFetchData = [];
-            props.campaign.references.forEach((reference) => {
-                influencersFetchData.push(reference.influencers);
-            });
+        init();
+    });
+
+    const init = () => {
+        let influencersFetchData = [];
+        let campaign = {...props.campaign};
+
+        if (!_.isEmpty(campaign) && _.isEmpty(influencers)) {
+            // LOOP SÍNCRONO
+            for (let reference of props.campaign.references) {
+                _.merge(influencersFetchData, reference.influencers);
+            }
             setInfluencers(influencersFetchData);
         }
-        fetchData();
-    }, []);
+    };
 
     const columns = [{
         Header: 'Foto',
@@ -32,10 +40,6 @@ function RankInfluencer(props) {
     }, {
         Header: 'Username',
         accessor: 'username',
-        className: 'text-center'
-    }, {
-        Header: 'Bio',
-        accessor: 'bio',
         className: 'text-center'
     }, {
         Header: 'Referências',
@@ -56,9 +60,8 @@ function RankInfluencer(props) {
             return {
                 foto: <img alt={'img'} src={influencer.profilePicture} />,
                 name: influencer.fullName,
-                username: <a href={'https://www.instagram.com/' + influencer.username} target="_blank">@{influencer.username}</a>,
-                bio: influencer.bio,
-                references: this.props.campaign.userNames,
+                username: <a href={'https://www.instagram.com/' + influencer.userName} target="_blank">@{influencer.userName}</a>,
+                references: props.campaign.name,
                 followedBy: influencer.followedBy,
                 follows: influencer.follows
             }
@@ -93,13 +96,12 @@ function RankInfluencer(props) {
                                         (state, rowInfo) => {
                                             if (rowInfo && rowInfo.row) {
                                                 return {
-                                                    onClick: (e) => {
-                                                        console.log(rowInfo);
-                                                        props.updateInfluencersSelecteds(rowInfo);
+                                                    onDoubleClick: (e) => {
+                                                        setSelected(rowInfo.index);
+                                                        props.updateInfluencersSelecteds(rowInfo.original);
                                                     },
                                                     style: {
-                                                        background: rowInfo.index === this.state.selected ? '#00afec' : 'white',
-                                                        color: rowInfo.index === this.state.selected ? 'white' : 'black'
+                                                        background: rowInfo.index === selected ? '#994c65' : '#4d4e64',
                                                     }
                                                 }
                                             } else {

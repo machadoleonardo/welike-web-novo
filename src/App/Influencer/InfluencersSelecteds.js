@@ -4,9 +4,6 @@ import {compose} from "redux";
 import connect from "react-redux/es/connect/connect";
 import {influencerActions, influencerSelectors} from "../../redux/modules/influencer";
 import service from "../../commons/services/selected";
-import {Button} from "react-bootstrap";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 class InfluencersSelecteds extends Component {
 
@@ -20,13 +17,8 @@ class InfluencersSelecteds extends Component {
     }
 
     init = async () => {
-        const influencersSelectes = await service.info(id);
-        this.props.insertInfluencersSelecteds(influencersSelectes);
-    };
-
-    save = async () => {
-        await service.save(this.props.influencersSelecteds());
-        alert("salvo com sucesso!");
+        const influencersSelecteds = await service.findByCampignId(id);
+        this.props.insertInfluencersSelecteds(influencersSelecteds);
     };
 
     render() {
@@ -98,11 +90,6 @@ class InfluencersSelecteds extends Component {
                                 </div>
                             </div>
                         </div>
-                        <Row>
-                            <Col md={12} xs={12}>
-                                <Button className={'btn-raised'} onClick={this.save} type="button">Salvar</Button>
-                            </Col>
-                        </Row>
                     </section>
                 </div>
             </div>
@@ -119,7 +106,6 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    updateInfluencersSelecteds: influencerActions.updateInfluencersSelecteds,
     insertInfluencersSelecteds: influencerActions.insertInfluencersSelecteds,
     deleteInfluencersSelecteds: influencerActions.deleteInfluencersSelecteds,
 };

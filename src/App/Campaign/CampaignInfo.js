@@ -2,8 +2,14 @@ import React, {useEffect, useState} from 'react';
 import RankInfluencer from './../Influencer/RankInfluencer';
 import InfluencersSelecteds from './../Influencer/InfluencersSelecteds';
 import service from "../../commons/services/campaign";
+import selectedService from "../../commons/services/selected";
 import Container from "../../commons/components/Template/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import {Button} from "react-bootstrap";
+import {influencerSelectors} from "../../redux/modules/influencer";
+import {compose} from "redux";
+import connect from "react-redux/es/connect/connect";
 
 
 function CampaignInfo(props) {
@@ -19,6 +25,17 @@ function CampaignInfo(props) {
         const campaignService = await service.info(id);
         setCampaign(campaignService);
     }
+
+    const save = async () => {
+        let selecteds = props.influencersSelecteds();
+
+        selecteds.forEachSync((selected) => {
+            selected.campaign = campaign;
+        });
+
+        await selectedService.save(selecteds);
+        alert("salvo com sucesso!");
+    };
 
     return (
         <Container>
@@ -53,15 +70,31 @@ function CampaignInfo(props) {
                 </div>
             </Row>
             <Row>
-                <div className="col-sm-12">
+                <Col md={12} xs={12}>
                     <RankInfluencer campaign={campaign} />
-                </div>
+                </Col>
             </Row>
             <Row>
-                <div className="col-sm-12">
-                    <InfluencersSelecteds/>
-                </div>
+                <Col md={12} xs={12}>
+                    <InfluencersSelecteds campaign={campaign} />
+                </Col>
+            </Row>
+            <Row>
+                <Col md={12} xs={12}>
+                    <Button className={'btn-raised'} onClick={save} type="button">Salvar</Button>
+                </Col>
             </Row>
         </Container>
     );
-} export default CampaignInfo;
+}
+
+function mapStateToProps(state) {
+    return {
+        influencersSelecteds: () => {
+            return influencerSelectors.getInfluencersSelecteds(state)
+        },
+    };
+}
+
+
+export default compose(connect(mapStateToProps, null))(CampaignInfo);

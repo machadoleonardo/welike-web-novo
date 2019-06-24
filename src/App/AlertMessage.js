@@ -36,9 +36,9 @@ class AlertMessage extends PureComponent {
             clearInterval(this.timer);
         }
 
-        this.timer = setTimeout(() => {
-            this.onClose(id)
-        }, 5000);
+        // this.timer = setTimeout(() => {
+        //     this.onClose(id)
+        // }, 5000);
 
         return (
             <SnackBar

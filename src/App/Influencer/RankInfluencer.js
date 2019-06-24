@@ -13,7 +13,7 @@ function RankInfluencer(props) {
 
     useEffect(() => {
         init();
-    });
+    }, [props.campaign]);
 
     const init = () => {
         let influencersFetchData = [];
@@ -26,6 +26,11 @@ function RankInfluencer(props) {
             }
             setInfluencers(influencersFetchData);
         }
+    };
+
+    const selectInfluencer = (influencer) => {
+        influencer.references = props.campaign.name;
+        props.updateInfluencersSelecteds(influencer);
     };
 
     const columns = [{
@@ -53,6 +58,10 @@ function RankInfluencer(props) {
         Header: 'Seguindo',
         accessor: 'follows',
         className: 'text-center'
+    }, {
+        Header: 'Ação',
+        accessor: 'action',
+        className: 'text-center'
     }];
 
     const toData = () => {
@@ -63,7 +72,10 @@ function RankInfluencer(props) {
                 username: <a href={'https://www.instagram.com/' + influencer.userName} target="_blank">@{influencer.userName}</a>,
                 references: props.campaign.name,
                 followedBy: influencer.followedBy,
-                follows: influencer.follows
+                follows: influencer.follows,
+                action: <button type="button" onClick={() => selectInfluencer(influencer)} className="btn btn-raised btn-sm btn-success">
+                    <i className="fa fa-arrow-down"></i>
+                </button>
             }
         });
     };
@@ -96,9 +108,9 @@ function RankInfluencer(props) {
                                         (state, rowInfo) => {
                                             if (rowInfo && rowInfo.row) {
                                                 return {
-                                                    onDoubleClick: (e) => {
+                                                    onClick: (e) => {
                                                         setSelected(rowInfo.index);
-                                                        props.updateInfluencersSelecteds(rowInfo.original);
+                                                        // props.updateInfluencersSelecteds(rowInfo.original);
                                                     },
                                                     style: {
                                                         background: rowInfo.index === selected ? '#994c65' : '#4d4e64',

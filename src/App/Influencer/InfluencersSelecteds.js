@@ -1,97 +1,128 @@
-import React, {useEffect, useState} from 'react';
+import React, {Component} from 'react';
 import ReactTable from "react-table";
 import {compose} from "redux";
 import connect from "react-redux/es/connect/connect";
-import {influencerSelectors} from "../../redux/modules/influencer";
+import {influencerActions, influencerSelectors} from "../../redux/modules/influencer";
+import service from "../../commons/services/selected";
+import {Button} from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-function RankInfluencer(props) {
-    const [influencers, setInfluencers] = useState(props.influencersSelecteds);
+class InfluencersSelecteds extends Component {
 
-    useEffect(() => {
-        console.log("aqui");
-        setInfluencers(props.influencersSelecteds);
-    }, [props.influencersSelecteds]);
+    constructor(props) {
+        super(props);
+    }
 
-    const columns = [{
-        Header: 'Foto',
-        accessor: 'foto',
-        headerClassName: 'align-middle',
-        className: 'text-center'
-    }, {
-        Header: 'Nome',
-        accessor: 'name',
-        className: 'text-center'
-    }, {
-        Header: 'Username',
-        accessor: 'username',
-        className: 'text-center'
-    }, {
-        Header: 'Referências',
-        accessor: 'references',
-        className: 'text-center'
-    }, {
-        Header: 'Seguidores',
-        accessor: 'followedBy',
-        className: 'text-center'
-    }, {
-        Header: 'Seguindo',
-        accessor: 'follows',
-        className: 'text-center'
-    }];
+    componentDidMount() {
+        this.props.deleteInfluencersSelecteds();
+        this.init();
+    }
 
-    const toData = () => {
-        console.log(influencers);
-        return influencers.map((influencer) => {
-            return {
-                foto: <img alt={'img'} src={influencer.foto.props.src} />,
-                name: influencer.name,
-                username: <a href={'https://www.instagram.com/' + influencer.username.props.children[1]} target="_blank">@{influencer.username.props.children[1]}</a>,
-                references: influencer.references,
-                followedBy: influencer.followedBy,
-                follows: influencer.follows
-            }
-        });
+    init = async () => {
+        const influencersSelectes = await service.info(id);
+        this.props.insertInfluencersSelecteds(influencersSelectes);
     };
 
-    return (
-        <div className="row">
-            <div className="col-md-12">
-                <section className="boxs">
-                    <div className="boxs-header dvd dvd-btm">
-                        <h1 className="custom-font">Influenciadores selecionados</h1>
-                    </div>
-                    <div className="boxs-body">
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <ReactTable
-                                    data={toData()}
-                                    columns={columns}
-                                    defaultPageSize={5}
-                                    filterable={true}
-                                    previousText={'Anterior'}
-                                    nextText={'Próxima'}
-                                    loadingText={'Carregando...'}
-                                    noDataText={'Nenhum registro encontrado'}
-                                    pageText={'Página'}
-                                    ofText={'de'}
-                                    rowsText={'linhas'}
-                                    pageJumpText={'Pular para próxima página'}
-                                    rowsSelectorText={'linhas por página'}
-                                />
+    save = async () => {
+        await service.save(this.props.influencersSelecteds());
+        alert("salvo com sucesso!");
+    };
+
+    render() {
+        const columns = [{
+            Header: 'Foto',
+            accessor: 'foto',
+            headerClassName: 'align-middle',
+            className: 'text-center'
+        }, {
+            Header: 'Nome',
+            accessor: 'name',
+            className: 'text-center'
+        }, {
+            Header: 'Username',
+            accessor: 'username',
+            className: 'text-center'
+        }, {
+            Header: 'Referências',
+            accessor: 'references',
+            className: 'text-center'
+        }, {
+            Header: 'Seguidores',
+            accessor: 'followedBy',
+            className: 'text-center'
+        }, {
+            Header: 'Seguindo',
+            accessor: 'follows',
+            className: 'text-center'
+        }];
+
+        const toData = () => {
+            return this.props.influencersSelecteds().map((influencer) => {
+                return {
+                    foto: <img alt={'img'} src={influencer.profilePicture} />,
+                    name: influencer.fullName,
+                    username: <a href={'https://www.instagram.com/' + influencer.userName} target="_blank">@{influencer.userName}</a>,
+                    references: influencer.references,
+                    followedBy: influencer.followedBy,
+                    follows: influencer.follows,
+                }
+            });
+        };
+
+        return (
+            <div className="row">
+                <div className="col-md-12">
+                    <section className="boxs">
+                        <div className="boxs-header dvd dvd-btm">
+                            <h1 className="custom-font">Influenciadores selecionados</h1>
+                        </div>
+                        <div className="boxs-body">
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <ReactTable
+                                        data={toData()}
+                                        columns={columns}
+                                        defaultPageSize={5}
+                                        filterable={true}
+                                        previousText={'Anterior'}
+                                        nextText={'Próxima'}
+                                        loadingText={'Carregando...'}
+                                        noDataText={'Nenhum registro encontrado'}
+                                        pageText={'Página'}
+                                        ofText={'de'}
+                                        rowsText={'linhas'}
+                                        pageJumpText={'Pular para próxima página'}
+                                        rowsSelectorText={'linhas por página'}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                        <Row>
+                            <Col md={12} xs={12}>
+                                <Button className={'btn-raised'} onClick={this.save} type="button">Salvar</Button>
+                            </Col>
+                        </Row>
+                    </section>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 function mapStateToProps(state) {
     return {
-        influencersSelecteds: influencerSelectors.getInfluencersSelecteds(state),
+        influencersSelecteds: () => {
+            return influencerSelectors.getInfluencersSelecteds(state)
+        },
     };
 }
 
+const mapDispatchToProps = {
+    updateInfluencersSelecteds: influencerActions.updateInfluencersSelecteds,
+    insertInfluencersSelecteds: influencerActions.insertInfluencersSelecteds,
+    deleteInfluencersSelecteds: influencerActions.deleteInfluencersSelecteds,
+};
 
-export default compose(connect(mapStateToProps, null))(RankInfluencer);
+
+export default compose(connect(mapStateToProps, mapDispatchToProps))(InfluencersSelecteds);

@@ -8,9 +8,9 @@ import {noticationActions, notificationSelectors} from "../../../redux/modules/n
 class NavBar extends Component {
 
     componentDidMount() {
-        this.interval = setInterval(async () => {
-            this.props.atualizarNotificacoes();
-        }, 5000);
+        // this.interval = setInterval(async () => {
+        //     this.props.atualizarNotificacoes();
+        // }, 5000);
     }
 
     componentWillUnmount() {
